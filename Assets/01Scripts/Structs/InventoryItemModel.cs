@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BoardGame
 {
+    [System.Serializable]
     public struct InventoryItemModel
     {
         public string Name;

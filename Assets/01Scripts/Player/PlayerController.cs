@@ -11,7 +11,7 @@ namespace BoardGame
         private void Start()
         {
             _currentCell = CellManager.Instance.GetCellByIndex(0);
-            transform.position = _currentCell.transform.position;
+            transform.position = _currentCell.MoveTransform.position;
         }
 
         private async void MoveCells()
@@ -19,7 +19,7 @@ namespace BoardGame
             int count = _remainingStep;
             for (int i = 0; i < count; i++)
             {
-                await JumpToTargetAsync(_currentCell.NextCell.transform.position, 1f, .5f);
+                await JumpToTargetAsync(_currentCell.NextCell.MoveTransform.position, 1f, .5f);
                 _remainingStep--;
                 _currentCell = _currentCell.NextCell;
             }

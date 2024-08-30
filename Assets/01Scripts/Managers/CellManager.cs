@@ -7,14 +7,14 @@ namespace BoardGame
 {
     public class CellManager : MonoBehaviour
     {
-        [SerializeField] private List<Cell> cells; 
+        [SerializeField] private List<Cell> cells;
         [SerializeField] private Cell cellPrefab;
         [SerializeField] private float spacing;
         [SerializeField] private int count;
 
         #region Singleton
 
-        public static CellManager Instance {get; private set;}
+        public static CellManager Instance { get; private set; }
 
         private void Awake()
         {
@@ -35,6 +35,12 @@ namespace BoardGame
             for (int i = 0; i < count; i++)
             {
                 Cell newCell = Instantiate(cellPrefab, Vector3.zero + (Vector3.forward * spacing * i), Quaternion.identity);
+                InventoryItemModel cellItemModel = InventoryManager.Instance.InventoryItems[UnityEngine.Random.Range(0, InventoryManager.Instance.InventoryItems.Count)].InventoryItemModel;
+                newCell.InitializeCell(new CellModel
+                {
+                     inventoryItemModel = cellItemModel,
+                     Quantity = UnityEngine.Random.Range(0, 10)
+                });
                 cells.Add(newCell);
             }
         }

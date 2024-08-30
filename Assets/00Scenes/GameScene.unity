@@ -447,7 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cells: []
   cellPrefab: {fileID: 3850963832100847695, guid: 4cc09749a0544c1409774d01ef65bf69, type: 3}
-  spacing: 1.5
+  spacing: 2
   count: 10
 --- !u!4 &2055235795
 Transform:

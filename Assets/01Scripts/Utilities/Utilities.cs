@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BoardGame
 {
-    public class InventoryItemSO : MonoBehaviour
+    public class Utilities : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()
