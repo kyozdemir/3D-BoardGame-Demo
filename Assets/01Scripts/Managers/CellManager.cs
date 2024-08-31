@@ -26,6 +26,7 @@ namespace BoardGame
 
         void Start()
         {
+            PoolManager.Instance.CreatePool<Cell>(Constants.PoolKeys.CELL, cellPrefab, 10);
             CreateCells();
             SetCellConnections();
         }
@@ -34,7 +35,7 @@ namespace BoardGame
         {
             for (int i = 0; i < count; i++)
             {
-                Cell newCell = Instantiate(cellPrefab, Vector3.zero + (Vector3.forward * spacing * i), Quaternion.identity);
+                Cell newCell = PoolManager.Instance.GetObject<Cell>(Constants.PoolKeys.CELL, Vector3.zero + (Vector3.forward * spacing * i));
                 InventoryItemModel cellItemModel = InventoryManager.Instance.InventoryItems[UnityEngine.Random.Range(0, InventoryManager.Instance.InventoryItems.Count)].InventoryItemModel;
                 newCell.InitializeCell(new CellModel
                 {

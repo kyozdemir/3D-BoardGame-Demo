@@ -33,7 +33,7 @@ namespace BoardGame
 
         public void UpdateQuantity(string name, int quantityChange)
         {
-            InventoryItemSO item = inventoryItems.Find(x => x.name == name);
+            InventoryItemSO item = inventoryItems.Find(x => x.InventoryItemModel.Name.Equals(name));
 
             if (item is not null)
             {

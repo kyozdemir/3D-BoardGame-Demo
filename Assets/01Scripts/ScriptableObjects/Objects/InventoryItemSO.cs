@@ -21,6 +21,7 @@ namespace BoardGame
         public void UpdateQuantity(int value)
         {
             _quantity += value;
+            Debug.Log($"Name: {InventoryItemModel.Name}, Quantity: {_quantity}");
         }
 
         public void SaveQuantity()

@@ -1,5 +1,4 @@
 using UnityEngine;
-using Cysharp.Threading.Tasks;
 
 namespace BoardGame
 {
@@ -19,7 +18,7 @@ namespace BoardGame
             int count = _remainingStep;
             for (int i = 0; i < count; i++)
             {
-                await JumpToTargetAsync(_currentCell.NextCell.MoveTransform.position, 1f, .5f);
+                await transform.JumpToTargetAsync(_currentCell.NextCell.MoveTransform.position, 1f, .5f);
                 _remainingStep--;
                 _currentCell = _currentCell.NextCell;
             }
@@ -36,39 +35,5 @@ namespace BoardGame
                 MoveCells();
             }
         }
-
-        #region Movement
-
-        private async UniTask JumpToTargetAsync(Vector3 targetPosition, float jumpPower, float duration)
-        {
-            Vector3 startPosition = transform.position;
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                float t = elapsedTime / duration;
-
-                // Lineer vertical movement
-                Vector3 currentHorizontalPosition = Vector3.Lerp(startPosition, targetPosition, t);
-
-                // Parabolic horizontal movement
-                float heightOffset = jumpPower * Mathf.Sin(Mathf.PI * t);
-
-                // Set new position
-                transform.position = new Vector3(currentHorizontalPosition.x, startPosition.y + heightOffset, currentHorizontalPosition.z);
-
-                await UniTask.Yield(); // yield return null
-            }
-            transform.position = targetPosition;
-        }
-
-        #endregion Movement
-
-        #region Events
-
-
-
-        #endregion Events
     }
 }

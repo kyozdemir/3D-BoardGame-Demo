@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BoardGame
 {
-    public class Cell : MonoBehaviour
+    public class Cell : PoolObject
     {
         [Header("UI References")]
         [SerializeField] private Image iconImage;
@@ -46,7 +46,15 @@ namespace BoardGame
 
         public void PlayerLanded(PlayerController player)
         {
+            InventoryManager.Instance.UpdateQuantity(
+                _cellModel.inventoryItemModel.Name,
+                _cellModel.Quantity
+                );
+        }
 
+        public override void ResetObject()
+        {
+            _nextCell = null;
         }
     }
 }
