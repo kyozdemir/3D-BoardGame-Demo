@@ -34,7 +34,7 @@ namespace BoardGame
             foreach (InventoryItemSO item in inventoryItems)
             {
                 if(string.IsNullOrEmpty(item.InventoryItemModel.Name)) continue;
-                
+
                 ItemDisplayer itemDisplayer = PoolManager.Instance.GetObject<ItemDisplayer>(
                     Constants.PoolKeys.ITEM_DISPLAYER,
                     default,
@@ -48,6 +48,8 @@ namespace BoardGame
 
         private void OnItemQuantityChanged(string name, int quantity)
         {
+            if(string.IsNullOrEmpty(name)) return;
+            
             ItemDisplayer itemDisplayer = _itemDisplayers.Find(x =>
                 x.InventoryItemModel.Name.Equals(name)
             );

@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 2332003926274125440}
+  nameBG: {fileID: 5013574821391948365}
   multiplierText: {fileID: 7780278067681785775}
   nameText: {fileID: 2563807839065497838}
   meshRenderer: {fileID: 1219341563010920559}

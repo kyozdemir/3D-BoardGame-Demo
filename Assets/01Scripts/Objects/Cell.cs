@@ -13,6 +13,8 @@ namespace BoardGame
         [Header("UI References")]
         [SerializeField]
         private Image iconImage;
+
+        [SerializeField]
         private Image nameBG;
 
         [SerializeField]
@@ -37,7 +39,7 @@ namespace BoardGame
 
         private void CustomizeCell()
         {
-            if (string.IsNullOrEmpty(_cellModel.inventoryItemModel.Name)) 
+            if (string.IsNullOrEmpty(_cellModel.inventoryItemModel.Name))
             {
                 DisplayUI(false);
             }
