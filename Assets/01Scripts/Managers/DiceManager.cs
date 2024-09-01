@@ -87,7 +87,8 @@ namespace BoardGame
             }
             for (int i = 0; i < count; i++)
             {
-                PoolManager.Instance.ReturnObject<Dice>(_selectedDiceSO.Name, _createdDices[i]);
+                PoolManager.Instance.ReturnObject<Dice>(_selectedDiceSO.Name, _createdDices[0]);
+                _createdDices.RemoveAt(0);
             }
         }
 
@@ -121,10 +122,13 @@ namespace BoardGame
 
         private void OnDiceStopped(Dice dice)
         {
-            _stoppedDiceCount++;
+            Debug.Log("Dice stopped");
+            ++_stoppedDiceCount;
             dice.OnDiceStopped -= OnDiceStopped;
             _totalDice += dice.GetTopSideValue();
 
+            Debug.Log(_stoppedDiceCount);
+            Debug.Log(_createdDices.Count);
             if (_stoppedDiceCount == _createdDices.Count) 
             { 
                 OnDiceThrowCompleted?.Invoke(_totalDice);

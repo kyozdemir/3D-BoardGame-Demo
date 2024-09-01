@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceThrowForce: 2
   initialDiceCount: 2
+  maxDiceCount: 4
+  minDiceCount: 1
+  initialDiceValue: 2
   minDiceValue: 1
   maxDiceValue: 99

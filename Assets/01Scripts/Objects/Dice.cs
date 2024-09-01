@@ -27,7 +27,6 @@ namespace BoardGame
 
         private void OnCollisionStay(Collision other)
         {
-            Debug.Log("CHECKING");
             CheckIfStopped();
         }
 
@@ -90,7 +89,7 @@ namespace BoardGame
             AssignValuesToSides(GetRandomizedValues(min, max));
             _rigidbody.isKinematic = false;
             _rigidbody.AddForce(
-                (transform.forward + Vector3.up) * DiceSettingsSO.Instance.DiceThrowForce,
+                (Vector3.forward + Vector3.up) * DiceSettingsSO.Instance.DiceThrowForce,
                 ForceMode.Impulse
             );
             _rigidbody.AddTorque(Utilities.GetRandomVector3());
