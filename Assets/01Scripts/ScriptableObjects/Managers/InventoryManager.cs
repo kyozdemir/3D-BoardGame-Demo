@@ -4,10 +4,15 @@ using UnityEngine;
 
 namespace BoardGame
 {
-    [CreateAssetMenu(fileName = "InventoryManager", menuName = "Inventory/InventoryManager", order = 1)]
+    [CreateAssetMenu(
+        fileName = "InventoryManager",
+        menuName = "Inventory/InventoryManager",
+        order = 1
+    )]
     public class InventoryManager : ScriptableObject
     {
-        [SerializeField] private List<InventoryItemSO> inventoryItems;
+        [SerializeField]
+        private List<InventoryItemSO> inventoryItems;
 
         public List<InventoryItemSO> InventoryItems => inventoryItems;
 

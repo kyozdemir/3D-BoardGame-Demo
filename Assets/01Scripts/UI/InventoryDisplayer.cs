@@ -8,7 +8,8 @@ namespace BoardGame
     public class InventoryDisplayer : MonoBehaviour
     {
         [Header("Prefab References")]
-        [SerializeField] private ItemDisplayer itemDisplayerPrefab;
+        [SerializeField]
+        private ItemDisplayer itemDisplayerPrefab;
 
         private List<ItemDisplayer> _itemDisplayers;
 
@@ -16,9 +17,10 @@ namespace BoardGame
         {
             _itemDisplayers = new List<ItemDisplayer>();
 
-            PoolManager.Instance.CreatePool<ItemDisplayer>(Constants.PoolKeys.ITEM_DISPLAYER,
-            itemDisplayerPrefab,
-            3
+            PoolManager.Instance.CreatePool<ItemDisplayer>(
+                Constants.PoolKeys.ITEM_DISPLAYER,
+                itemDisplayerPrefab,
+                3
             );
 
             CreateDisplayers();
@@ -31,7 +33,12 @@ namespace BoardGame
             List<InventoryItemSO> inventoryItems = InventoryManager.Instance.InventoryItems;
             foreach (InventoryItemSO item in inventoryItems)
             {
-                ItemDisplayer itemDisplayer = PoolManager.Instance.GetObject<ItemDisplayer>(Constants.PoolKeys.ITEM_DISPLAYER, default, default, transform);
+                ItemDisplayer itemDisplayer = PoolManager.Instance.GetObject<ItemDisplayer>(
+                    Constants.PoolKeys.ITEM_DISPLAYER,
+                    default,
+                    default,
+                    transform
+                );
                 itemDisplayer.Initialize(item.InventoryItemModel, item.Quantity);
                 _itemDisplayers.Add(itemDisplayer);
             }
@@ -39,7 +46,9 @@ namespace BoardGame
 
         private void OnItemQuantityChanged(string name, int quantity)
         {
-            ItemDisplayer itemDisplayer = _itemDisplayers.Find(x => x.InventoryItemModel.Name.Equals(name));
+            ItemDisplayer itemDisplayer = _itemDisplayers.Find(x =>
+                x.InventoryItemModel.Name.Equals(name)
+            );
             itemDisplayer.UpdateQuantityText(quantity, true);
         }
     }

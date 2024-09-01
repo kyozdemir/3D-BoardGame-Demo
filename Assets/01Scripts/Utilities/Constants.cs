@@ -9,6 +9,7 @@ namespace BoardGame
         public static class Paths
         {
             public const string PATH_INVENTORY_MANAGER = "Managers/InventoryManager";
+            public const string PATH_DICE_SETTINGS = "Settings/DiceSettings";
         }
 
         public static class PoolKeys

@@ -50,7 +50,7 @@ namespace BoardGame
         {
             Vector3 initialScale = transform.localScale;
             float elapsedTime = 0f;
-            float frequency = Mathf.PI / duration; 
+            float frequency = Mathf.PI / duration;
 
             while (elapsedTime < duration)
             {
@@ -64,6 +64,23 @@ namespace BoardGame
             }
 
             transform.localScale = initialScale;
+        }
+
+        private static int _randomIntSelector;
+
+        public static int GetRandomInt(int min, int max)
+        {
+            _randomIntSelector = Random.Range(min, max);
+            return _randomIntSelector;
+        }
+
+        public static Vector3 GetRandomVector3() 
+        { 
+            return new Vector3(
+                GetRandomInt(0,360),
+                GetRandomInt(0,360),
+                GetRandomInt(0,360)
+            );
         }
     }
 }
