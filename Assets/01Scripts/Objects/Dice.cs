@@ -11,12 +11,13 @@ namespace BoardGame
         private bool _isDiceStopped = true;
         private List<DiceSide> _diceSides;
         private Rigidbody _rigidbody;
+        private Vector3 direction = Vector3.zero;
 
         public bool IsDiceStopped => _isDiceStopped;
 
         public event Action<Dice> OnDiceStopped;
 
-        private void Start()
+        private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.isKinematic = true;
@@ -25,7 +26,7 @@ namespace BoardGame
                 GetComponentsInChildren(_diceSides);
         }
 
-        private void OnCollisionStay(Collision other)
+        private void FixedUpdate()
         {
             CheckIfStopped();
         }
@@ -34,7 +35,6 @@ namespace BoardGame
         {
             int num;
             List<int> numbers = new();
-
             if (max - min >= _diceSides.Count)
             {
                 while (numbers.Count < _diceSides.Count)
@@ -67,20 +67,23 @@ namespace BoardGame
 
         private void CheckIfStopped()
         {
+            if (_rigidbody.IsSleeping())
+                _rigidbody.WakeUp();
             if (
                 !_isDiceStopped
                 && _rigidbody.velocity.magnitude < 0.01f
                 && _rigidbody.angularVelocity.magnitude < 0.01f
             )
             {
+                Debug.Log("CHECK COMPLETE");
                 _isDiceStopped = true;
                 _rigidbody.isKinematic = true;
                 OnDiceStopped.Invoke(this);
             }
         }
 
-        public int GetTopSideValue() 
-        { 
+        public int GetTopSideValue()
+        {
             return _diceSides.Find(x => x.IsOnTop()).Number;
         }
 
@@ -88,10 +91,18 @@ namespace BoardGame
         {
             AssignValuesToSides(GetRandomizedValues(min, max));
             _rigidbody.isKinematic = false;
-            _rigidbody.AddForce(
-                (Vector3.forward + Vector3.up) * DiceSettingsSO.Instance.DiceThrowForce,
-                ForceMode.Impulse
-            );
+
+            float horizontalDistance =
+                PlayerManager.Instance.CurrentPlayer.transform.position.x - transform.position.x;
+
+            float gravity = Mathf.Abs(Physics.gravity.y);
+            float time = Mathf.Sqrt(2 * 1 / gravity);
+
+            float horizontalSpeed = (horizontalDistance / time) / 3;
+
+            Vector3 velocity = new Vector3(horizontalDistance, 0, 0);
+
+            _rigidbody.velocity = velocity;
             _rigidbody.AddTorque(Utilities.GetRandomVector3());
             _isDiceStopped = false;
         }

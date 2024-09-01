@@ -23,6 +23,7 @@ namespace BoardGame
         public void Initialize(InventoryItemModel inventoryItemModel, int quantity)
         {
             _inventoryItemModel = inventoryItemModel;
+            iconImage.sprite = _inventoryItemModel.Icon;
             UpdateQuantityText(quantity);
         }
 

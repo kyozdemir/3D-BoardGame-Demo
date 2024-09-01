@@ -66,6 +66,29 @@ namespace BoardGame
             transform.localScale = initialScale;
         }
 
+        public static async UniTask ChangeEmissionByTimeAsync(
+            this Renderer renderer,
+            Color color,
+            float duration,
+            string propertyText = "_EmissionColor"
+        ) 
+        { 
+            float elapsedTime = 0;
+            MaterialPropertyBlock _mpb = new MaterialPropertyBlock();
+
+            _mpb.SetColor(propertyText, color);
+            renderer.SetPropertyBlock(_mpb);
+
+            while(elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                await UniTask.Yield();
+            }
+
+            _mpb.SetColor(propertyText, Color.black);
+            renderer.SetPropertyBlock(_mpb);
+        }
+
         private static int _randomIntSelector;
 
         public static int GetRandomInt(int min, int max)
@@ -74,13 +97,9 @@ namespace BoardGame
             return _randomIntSelector;
         }
 
-        public static Vector3 GetRandomVector3() 
-        { 
-            return new Vector3(
-                GetRandomInt(0,360),
-                GetRandomInt(0,360),
-                GetRandomInt(0,360)
-            );
+        public static Vector3 GetRandomVector3()
+        {
+            return new Vector3(GetRandomInt(0, 360), GetRandomInt(0, 360), GetRandomInt(0, 360));
         }
     }
 }

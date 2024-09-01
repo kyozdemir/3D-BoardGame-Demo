@@ -12,6 +12,8 @@ namespace BoardGame
         private PlayerController _currentPlayer;
         private int turn;
 
+        public PlayerController CurrentPlayer => _currentPlayer;
+
         public event Action OnTurnEnded;
 
         #region Singleton
@@ -24,6 +26,11 @@ namespace BoardGame
         }
 
         #endregion  Singleton
+
+        private void Start()
+        {
+            _currentPlayer = players[0];
+        }
 
         private void OnEnable()
         {

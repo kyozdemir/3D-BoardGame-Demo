@@ -33,6 +33,8 @@ namespace BoardGame
             List<InventoryItemSO> inventoryItems = InventoryManager.Instance.InventoryItems;
             foreach (InventoryItemSO item in inventoryItems)
             {
+                if(string.IsNullOrEmpty(item.InventoryItemModel.Name)) continue;
+                
                 ItemDisplayer itemDisplayer = PoolManager.Instance.GetObject<ItemDisplayer>(
                     Constants.PoolKeys.ITEM_DISPLAYER,
                     default,

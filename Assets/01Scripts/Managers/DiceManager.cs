@@ -13,7 +13,7 @@ namespace BoardGame
         private List<DiceSO> dices;
 
         [SerializeField]
-        private Transform diceThrowTransform;
+        private Transform diceThrowStartingTransform;
 
         private bool _isThrowReady;
         private DiceSO _selectedDiceSO;
@@ -46,7 +46,6 @@ namespace BoardGame
                 DiceSettingsSO.Instance.MinDiceValue,
                 DiceSettingsSO.Instance.InitialDiceValue
             );
-            CreateNewDiceByCount(_diceCount);
         }
 
         private void OnEnable()
@@ -71,7 +70,11 @@ namespace BoardGame
         {
             for (int i = 0; i < count; i++)
             {
-                Dice createdDice = PoolManager.Instance.GetObject<Dice>(_selectedDiceSO.name);
+                Dice createdDice = PoolManager.Instance.GetObject<Dice>(
+                    _selectedDiceSO.name,
+                    diceThrowStartingTransform.position
+                    + (Vector3.forward * (i))
+                );
                 _createdDices.Add(createdDice);
             }
         }
@@ -107,13 +110,16 @@ namespace BoardGame
                 CreateNewDiceByCount(_diceCount - _createdDices.Count);
             }
 
-            _createdDices.ForEach(x =>
+            for (int i = 0; i < _createdDices.Count; i++)
             {
-                x.OnDiceStopped += OnDiceStopped;
-                x.transform.position =
-                    diceThrowTransform.position + (UnityEngine.Random.onUnitSphere * 2);
-                x.Throw((int)_diceRange.x, (int)_diceRange.y);
-            });
+                _createdDices[i].OnDiceStopped += OnDiceStopped;
+                _createdDices[i].transform.position =
+                    diceThrowStartingTransform.position
+                    + (Vector3.forward * (i + 2));
+                _createdDices[i].Throw((int)_diceRange.x, (int)_diceRange.y);
+            }
+
+            _createdDices.ForEach(x => { });
         }
 
         #endregion Throwing Dice
@@ -129,8 +135,8 @@ namespace BoardGame
 
             Debug.Log(_stoppedDiceCount);
             Debug.Log(_createdDices.Count);
-            if (_stoppedDiceCount == _createdDices.Count) 
-            { 
+            if (_stoppedDiceCount == _createdDices.Count)
+            {
                 OnDiceThrowCompleted?.Invoke(_totalDice);
             }
         }

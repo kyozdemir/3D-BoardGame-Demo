@@ -28,6 +28,7 @@ namespace BoardGame
                 );
                 _remainingStep--;
                 _currentCell = _currentCell.NextCell;
+                _currentCell.PlayerBounced();
             }
 
             if (_remainingStep == 0)
